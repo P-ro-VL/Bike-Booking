@@ -2,6 +2,7 @@ import 'package:book_bike/features/deposit_money/deposit_money_page.dart';
 import 'package:book_bike/features/journey_history/journey_history_page.dart';
 import 'package:book_bike/features/station/list_station_page.dart';
 import 'package:book_bike/features/transaction_history/transaction_history_page.dart';
+import 'package:book_bike/features/user_info/user_info.dart';
 import 'package:book_bike/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,6 +48,13 @@ List<HomeFeature> features = [
       color: Colors.purple,
       onClick: () {
         Get.to(DepositMoneyPage());
+      }),
+  HomeFeature(
+      name: 'Hướng dẫn\nsử dụng',
+      icon: Icons.book,
+      color: Colors.pink,
+      onClick: () {
+        Get.to(UserInfoPage());
       }),
 ];
 

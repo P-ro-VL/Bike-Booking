@@ -6,6 +6,8 @@
     "commonIstatus": "Trạng thái",
     "commonIconfirm": "Xác nhận",
     "commonIcancel": "Huỷ",
+    "commonIchangePassword": "Đổi mật khẩu",
+    "commonIlogOut": "Đăng xuất",
     "authIinvalidPhoneNumber": "Số điện thoại không hợp lệ",
     "authInotHaveAccount": "Chưa có tài khoản? ",
     "authIregisterNow": "Đăng ký ngay",

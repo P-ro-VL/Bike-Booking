@@ -59,7 +59,7 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                 children: [
                   Text(
                     (Ln.i?.bikeIbikeId ?? '')
-                        .replaceAll('%s', widget.bike.id ?? '--'),
+                        .replaceAll('%s', widget.bike.id.toString() ?? '--'),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,

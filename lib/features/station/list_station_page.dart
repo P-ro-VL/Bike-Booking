@@ -1,6 +1,7 @@
 import 'package:book_bike/data/entity/station_entity.dart';
 import 'package:book_bike/features/station/detail_station_page.dart';
 import 'package:book_bike/features/station/station_direction_page.dart';
+import 'package:book_bike/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ class ListStationPage extends StatelessWidget {
   ListStationPage({super.key});
 
   final controller = Get.put(ListStationPageController());
+  final globalController = Get.find<GlobalController>();
 
   @override
   Widget build(BuildContext context) {
@@ -88,18 +90,7 @@ class ListStationPage extends StatelessWidget {
                       width: 8,
                     ),
                     Text(
-                        '${Ln.i?.stationInumberOfBikes}: ${station.bikes?.length}'),
-                  ]),
-                  Row(children: [
-                    const Icon(
-                      Icons.cell_tower,
-                      size: 16,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                        '${Ln.i?.stationIstationAddress}: ${station.address ?? '--'}'),
+                        '${Ln.i?.stationInumberOfBikes}: ${globalController.getBikes(station.id ?? -1).length}'),
                   ]),
                 ],
               ),

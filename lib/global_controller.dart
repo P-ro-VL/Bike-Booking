@@ -17,6 +17,7 @@ class GlobalController extends GetxController {
   final transactions = RxList<TransactionEntity>();
   final stations = RxList();
   final journeys = RxList<JourneyEntity>();
+  final bikes = RxList<BikeEntity>();
 
   final fromLat = 20.997252488929842;
   final fromLng = 105.86712242384023;
@@ -25,8 +26,13 @@ class GlobalController extends GetxController {
     initTransactions();
     initStations();
     initJourneys();
+    initBikes();
 
     super.onInit();
+  }
+
+  List<BikeEntity> getBikes(int stationId) {
+    return bikes.where((e) => e.stationId == stationId).toList();
   }
 
   Future<String> login(
@@ -62,29 +68,12 @@ class GlobalController extends GetxController {
     }
   }
 
-  void initStations() {
-    for (var i = 0; i < 20; i++) {
-      stations.add(StationEntity(
-          id: i.toString(),
-          address: 'Khu đô thị Times City',
-          name: 'Trạm số ${i + 1}',
-          lat: 20.997252488929842,
-          lng: 105.86712242384023,
-          bikes: [
-            BikeEntity(
-                id: '$i$i',
-                battery: Random.secure().nextInt(100).toDouble(),
-                status: Random.secure().nextInt(100) < 10
-                    ? BikeStatus.rented
-                    : BikeStatus.available),
-            BikeEntity(
-                id: '$i${i + 1}',
-                battery: Random.secure().nextInt(100).toDouble(),
-                status: Random.secure().nextInt(100) < 10
-                    ? BikeStatus.rented
-                    : BikeStatus.available)
-          ]));
-    }
+  void initStations() async {
+    stations.addAll(await userRepository.getStations());
+  }
+
+  void initBikes() async {
+    bikes.addAll(await userRepository.getBikes());
   }
 
   void initTransactions() {
