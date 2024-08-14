@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import '../../l10n/app_l18.dart';
 
 class BikeEntity {
-  final String? id;
-  final double? battery;
-  final BikeStatus status;
+  final int? id;
+  final int? stationId;
+  final num? battery;
+  final String? status;
+  final String? state;
 
   BikeEntity({
     this.id,
     this.battery,
-    this.status = BikeStatus.available,
+    this.stationId,
+    this.status,
+    this.state,
   });
 }
 

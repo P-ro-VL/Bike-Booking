@@ -3,21 +3,22 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class JourneyEntity {
-  final String? id;
-  final num? fromTime;
-  final num? toTime;
-  final num? kcalAbsorbed;
+  final num? id;
+  final num? bikeId;
+  final num? accountId;
 
   final Offset? fromLatLng;
   final Offset? toLatLng;
 
+  final num? rating;
+
   JourneyEntity({
     this.id,
-    this.fromTime,
-    this.toTime,
-    this.kcalAbsorbed,
+    this.bikeId,
+    this.accountId,
     this.fromLatLng,
     this.toLatLng,
+    this.rating,
   });
 
   num get length =>

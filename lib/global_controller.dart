@@ -3,30 +3,36 @@ import 'dart:math';
 import 'package:book_bike/data/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'data/entity/bike_entity.dart';
 import 'data/entity/journey_entity.dart';
 import 'data/entity/station_entity.dart';
 import 'data/entity/transaction_history.dart';
 import 'data/entity/user_entity.dart';
+import 'l10n/app_l18.dart';
 
 class GlobalController extends GetxController {
   final userRepository = UserRepositoryImpl();
 
   final user = Rxn<UserEntity>();
   final transactions = RxList<TransactionEntity>();
-  final stations = RxList();
+  final stations = RxList<StationEntity>();
   final journeys = RxList<JourneyEntity>();
+  final bikes = RxList<BikeEntity>();
 
-  final fromLat = 20.997252488929842;
-  final fromLng = 105.86712242384023;
   @override
   void onInit() {
     initTransactions();
     initStations();
     initJourneys();
+    initBikes();
 
     super.onInit();
+  }
+
+  List<BikeEntity> getBikes(int stationId) {
+    return bikes.where((e) => e.stationId == stationId).toList();
   }
 
   Future<String> login(
@@ -42,49 +48,44 @@ class GlobalController extends GetxController {
     }
   }
 
-  void initJourneys() {
-    for (var i = 0; i < 10; i++) {
-      double offsetX = Random.secure().nextDouble() / 80;
-      double offsetY = Random.secure().nextDouble() / 80;
-
-      double negavX = Random.secure().nextBool() ? -1 : 1;
-      double negavY = Random.secure().nextBool() ? -1 : 1;
-
-      journeys.add(JourneyEntity(
-        id: 'JRN$i',
-        fromTime: DateTime.now().millisecondsSinceEpoch,
-        toTime: DateTime.now().millisecondsSinceEpoch,
-        kcalAbsorbed: Random.secure().nextInt(2560),
-        fromLatLng: Offset(fromLat, fromLng),
-        toLatLng:
-            Offset(fromLat + negavX * offsetX, fromLng + negavY * offsetY),
+  Future<void> register({
+    required String name,
+    required String phone,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final supabase = Supabase.instance.client;
+      await supabase.from('NGUOIDUNG').insert({
+        'MAND': Random.secure().nextInt(100000),
+        'MATKHAU': password,
+        'TENNGUOIDUNG': name,
+        'SODUTAIKHOAN': 0,
+        'SDT': phone,
+        'EMAIL': email,
+      });
+      Get.showSnackbar(GetSnackBar(
+        message: Ln.i?.authIcreateAccSuccess,
+        backgroundColor: Colors.green,
+      ));
+    } catch (_) {
+      Get.showSnackbar(GetSnackBar(
+        message: Ln.i?.commonIunknownError,
+        backgroundColor: Colors.green,
       ));
     }
   }
 
-  void initStations() {
-    for (var i = 0; i < 20; i++) {
-      stations.add(StationEntity(
-          id: i.toString(),
-          address: 'Khu đô thị Times City',
-          name: 'Trạm số ${i + 1}',
-          lat: 20.997252488929842,
-          lng: 105.86712242384023,
-          bikes: [
-            BikeEntity(
-                id: '$i$i',
-                battery: Random.secure().nextInt(100).toDouble(),
-                status: Random.secure().nextInt(100) < 10
-                    ? BikeStatus.rented
-                    : BikeStatus.available),
-            BikeEntity(
-                id: '$i${i + 1}',
-                battery: Random.secure().nextInt(100).toDouble(),
-                status: Random.secure().nextInt(100) < 10
-                    ? BikeStatus.rented
-                    : BikeStatus.available)
-          ]));
-    }
+  void initJourneys() async {
+    journeys.addAll(await userRepository.getJourneys());
+  }
+
+  void initStations() async {
+    stations.addAll(await userRepository.getStations());
+  }
+
+  void initBikes() async {
+    bikes.addAll(await userRepository.getBikes());
   }
 
   void initTransactions() {

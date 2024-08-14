@@ -34,9 +34,11 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 16,
             ),
-            Wrap(
-              runSpacing: 16,
-              children: features.map((e) => _buildFeature(e)).toList(),
+            Center(
+              child: Wrap(
+                runSpacing: 16,
+                children: features.map((e) => _buildFeature(e)).toList(),
+              ),
             )
           ],
         ),
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: feature.onClick,
       child: SizedBox(
-        width: 128,
+        width: 120,
         child: Column(
           children: [
             SizedBox(

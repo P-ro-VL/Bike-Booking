@@ -21,17 +21,16 @@ class StationDrectionPage extends StatelessWidget {
           },
           child: const Icon(Icons.arrow_back),
         ),
-        title: Column(
-          children: [
-            Text(
-              station.name ?? '',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-            ),
-            Text(
-              station.address ?? '--',
-              style: const TextStyle(fontSize: 16),
-            ),
-          ],
+        title: Center(
+          child: Column(
+            children: [
+              Text(
+                station.name ?? '',
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
         ),
       ),
       body: Stack(

@@ -37,6 +37,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 24,
               ),
               DSTextFormField(
+                title: Ln.i?.authIfullName ?? '',
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return Ln.i?.commonIrequiredField;
+                  }
+                  return null;
+                },
+                onChanged: (newText) {
+                  controller.name = newText;
+                },
+                errorText: controller.nameFieldError.value,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DSTextFormField(
                 title: Ln.i?.commonIphoneNumber ?? '',
                 validator: (text) {
                   if (text == null || text.isEmpty) {
@@ -44,6 +60,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   }
                   if (text.length != 10) return Ln.i?.authIinvalidPhoneNumber;
                   return null;
+                },
+                onChanged: (newText) {
+                  controller.phone = newText;
                 },
                 keyboardType: TextInputType.phone,
                 errorText: controller.phoneFieldError.value,
@@ -59,6 +78,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   }
                   if (!text.contains('@')) return Ln.i?.authIinvalidEmail;
                   return null;
+                },
+                onChanged: (newText) {
+                  controller.email = newText;
                 },
                 errorText: controller.emailFieldError.value,
               ),
@@ -100,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    controller.submit();
+                    controller.register();
                   },
                   child: Text(Ln.i?.authIregister ?? '')),
               const SizedBox(

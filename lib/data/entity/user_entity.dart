@@ -1,6 +1,6 @@
 class UserEntity {
   final String? accountId;
-  final String? userId;
+  final int? userId;
   final String? password;
   final String? displayName;
   final String? phone;
