@@ -17,27 +17,37 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            HomeHeaderWidget(),
-            const SizedBox(
-              height: 24,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset('assets/home_screen_bgr.jpg'),
             ),
-            Text(
-              Ln.i?.homeIfeatures ?? '',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HomeHeaderWidget(),
+                const SizedBox(
+                  height: 24,
+                ),
+                Text(
+                  Ln.i?.homeIfeatures ?? '',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Center(
+                  child: Wrap(
+                    runSpacing: 16,
+                    children: features.map((e) => _buildFeature(e)).toList(),
+                  ),
+                )
+              ],
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Wrap(
-              runSpacing: 16,
-              children: features.map((e) => _buildFeature(e)).toList(),
-            )
           ],
         ),
       ).paddingSymmetric(horizontal: 16),
@@ -48,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: feature.onClick,
       child: SizedBox(
-        width: 128,
+        width: 120,
         child: Column(
           children: [
             SizedBox(

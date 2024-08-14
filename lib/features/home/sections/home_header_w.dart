@@ -1,4 +1,5 @@
 import 'package:book_bike/features/authen/authen_page.dart';
+import 'package:book_bike/features/user_info/user_info.dart';
 import 'package:book_bike/global_controller.dart';
 import 'package:book_bike/utils/string_utils.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class HomeHeaderWidget extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              showLogoutDialog();
+              Get.to(UserInfoPage());
             },
             child: const Icon(
               Icons.person,
@@ -49,25 +50,5 @@ class HomeHeaderWidget extends StatelessWidget {
         ],
       ).paddingAll(16),
     );
-  }
-
-  void showLogoutDialog() {
-    showDialog(
-        context: Get.context!,
-        builder: (builder) => AlertDialog(
-              content: Text(Ln.i?.authIconfirmLogout ?? ''),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: Text(Ln.i?.commonIcancel ?? '')),
-                TextButton(
-                    onPressed: () {
-                      Get.offAll(AuthenticationPage());
-                    },
-                    child: Text(Ln.i?.commonIconfirm ?? '')),
-              ],
-            ));
   }
 }

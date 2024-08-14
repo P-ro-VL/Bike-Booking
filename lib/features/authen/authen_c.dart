@@ -14,26 +14,39 @@ class AuthenticationPageController extends GetxController {
   final passwordFieldError = RxnString();
   final emailFieldError = RxnString();
   final reEnterPasswordError = RxnString();
+  final nameFieldError = RxnString();
 
   final pageState = RxString('login');
 
   var phone = '';
   var password = '';
+  var name = '';
+  var email = '';
 
-  void submit() async {
+  void login() async {
     bool result = formKey.currentState!.validate();
 
     if (!result) return;
 
-    print('SDT: $phone, PASS: $password');
     final authResult = await controller.login(phone: phone, password: password);
     if (authResult == 'success') {
       Get.to(const HomePage());
     } else {
       Get.showSnackbar(GetSnackBar(
         message: Ln.i?.authIloginFailed ?? '',
+        duration: const Duration(seconds: 3),
+        showProgressIndicator: true,
       ));
     }
+  }
+
+  void register() async {
+    bool result = formKey.currentState!.validate();
+
+    if (!result) return;
+
+    await controller.register(
+        name: name, phone: phone, email: email, password: password);
   }
 
   void goToLogin() {

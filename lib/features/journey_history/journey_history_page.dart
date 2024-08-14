@@ -25,7 +25,7 @@ class JourneyHistoryPage extends StatelessWidget {
           child: const Icon(Icons.arrow_back),
         ),
         title: Text(
-          Ln.i?.journeyIhistoryTitle ?? '',
+          '${Ln.i?.journeyIhistoryTitle ?? ''} (${controller.journeys.length})',
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
@@ -40,92 +40,79 @@ class JourneyHistoryPage extends StatelessWidget {
   }
 
   Widget _buildItem(BuildContext context, JourneyEntity journey) {
-    return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () {
-              showModalBottomSheet(
-                  showDragHandle: true,
-                  context: context,
-                  builder: (context) => SafeArea(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 300, child: _buildMap(journey)),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${Ln.i?.journeyIjourneyId} ${journey.id ?? '--'}',
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Row(children: [
-                                        const Icon(
-                                          Icons.timelapse,
-                                          size: 16,
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                            '${Ln.i?.journeyIstartTime}: ${journey.fromTime!.formatDate}'),
-                                      ]),
-                                      Row(children: [
-                                        const Icon(
-                                          Icons.timelapse,
-                                          size: 16,
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                            '${Ln.i?.journeyIendTime}: ${journey.toTime!.formatDate}'),
-                                      ]),
-                                      Row(children: [
-                                        const Icon(
-                                          Icons.fireplace,
-                                          size: 16,
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                            '${Ln.i?.journeyIabsorbedKcal}: ${journey.kcalAbsorbed!} kcal'),
-                                      ]),
-                                    ],
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+            showDragHandle: true,
+            context: context,
+            builder: (context) => SafeArea(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 300, child: _buildMap(journey)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${Ln.i?.journeyIjourneyId} ${journey.id ?? '--'}',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Row(children: [
+                                  const Icon(
+                                    Icons.star,
+                                    size: 16,
                                   ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        '${journey.length}',
-                                        style: const TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      const Text('km'),
-                                    ],
-                                  )
-                                ],
-                              ).paddingAll(12),
-                            ],
-                          ),
-                        ),
-                      ));
-            },
-            child: Column(
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                      '${Ln.i?.journeyIrating}: ${journey.rating}'),
+                                ]),
+                                Row(children: [
+                                  const Icon(
+                                    Icons.pedal_bike,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                      '${Ln.i?.bikeIbikeId.replaceAll(' %s', '')}: ${journey.bikeId}'),
+                                ])
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  '${journey.length}',
+                                  style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                const Text('km'),
+                              ],
+                            )
+                          ],
+                        ).paddingAll(12),
+                      ],
+                    ),
+                  ),
+                ));
+      },
+      child: Card(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -138,35 +125,42 @@ class JourneyHistoryPage extends StatelessWidget {
                 ),
                 Row(children: [
                   const Icon(
-                    Icons.timelapse,
+                    Icons.pedal_bike,
                     size: 16,
                   ),
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(
-                      '${Ln.i?.journeyIstartTime}: ${journey.fromTime!.formatDate}'),
+                  Text('${Ln.i?.journeyIBikeId}: ${journey.bikeId}'),
                 ]),
                 Row(children: [
                   const Icon(
-                    Icons.timelapse,
+                    Icons.star,
                     size: 16,
                   ),
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(
-                      '${Ln.i?.journeyIendTime}: ${journey.toTime!.formatDate}'),
+                  Text('${Ln.i?.journeyIrating}: '),
+                  if (journey.rating == 0)
+                    Text(Ln.i?.journeyInoRating ?? '',
+                        style: const TextStyle(color: Colors.black38)),
+                  for (var i = 0; i < journey.rating!; i++)
+                    Icon(
+                      Icons.star,
+                      size: 12,
+                      color: Colors.yellow[800],
+                    )
                 ]),
               ],
             ),
-          ),
-          const Icon(
-            Icons.chevron_right,
-            color: Colors.black26,
-          ).paddingAll(16),
-        ],
-      ).paddingAll(12),
+            const Icon(
+              Icons.chevron_right,
+              color: Colors.black26,
+            ).paddingAll(16),
+          ],
+        ).paddingAll(12),
+      ),
     );
   }
 
@@ -210,7 +204,8 @@ class JourneyHistoryPage extends StatelessWidget {
                     height: 8,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         color: Colors.red),
@@ -236,7 +231,8 @@ class JourneyHistoryPage extends StatelessWidget {
                     height: 8,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         color: Colors.blue),

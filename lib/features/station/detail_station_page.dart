@@ -1,5 +1,6 @@
 import 'package:book_bike/data/entity/bike_entity.dart';
 import 'package:book_bike/data/entity/station_entity.dart';
+import 'package:book_bike/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,12 +9,16 @@ import '../../l10n/app_l18.dart';
 class DetailStationPage extends StatelessWidget {
   final StationEntity station;
 
-  const DetailStationPage({required this.station, super.key});
+  DetailStationPage({required this.station, super.key});
+
+  final controller = Get.find<GlobalController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -35,9 +40,22 @@ class DetailStationPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: (station.bikes ?? [])
-              .map((element) => _buildItem(element as BikeEntity))
-              .toList()
+          children: (controller.getBikes(station.id ?? -1)).isEmpty
+              ? [
+                  Image.asset('assets/no_data.jpg'),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Center(
+                    child: Text(
+                      Ln.i?.commonInoData ?? '',
+                      style: TextStyle(color: Colors.black26, fontSize: 16),
+                    ),
+                  )
+                ]
+              : (controller.getBikes(station.id ?? -1))
+                  .map((element) => _buildItem(element as BikeEntity))
+                  .toList()
             ..add(const SizedBox(
               height: 32,
             )),
@@ -99,11 +117,11 @@ class DetailStationPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: bike.status.color,
+        // color: bike.status ,
       ),
       child: Text(
-        bike.status.displayName,
-        style: const TextStyle(color: Colors.white),
+        bike.status ?? '--',
+        style: const TextStyle(color: Colors.blue),
       ).paddingAll(4),
     );
   }
