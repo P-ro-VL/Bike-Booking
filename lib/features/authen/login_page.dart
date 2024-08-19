@@ -1,5 +1,6 @@
 import 'package:book_bike/common/widgets/ds_text_form_field.dart';
 import 'package:book_bike/features/authen/authen_c.dart';
+import 'package:book_bike/features/authen/forget_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    controller.submit();
+                    controller.login();
                   },
                   child: Text(Ln.i?.authIloginTitle ?? '')),
               const SizedBox(
@@ -86,6 +87,21 @@ class _LoginPageState extends State<LoginPage> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         controller.goToRegister();
+                      }),
+              ])),
+              const SizedBox(
+                height: 24,
+              ),
+              Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: Ln.i?.authIforgetPassword,
+                    style: TextStyle(
+                        color: Colors.blue[800],
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.blue[800]),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Get.to(ForgotPasswordPage());
                       }),
               ]))
             ],

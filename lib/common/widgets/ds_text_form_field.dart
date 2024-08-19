@@ -22,16 +22,22 @@ class DSTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
+        if (title.isNotEmpty) ...[
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
+          const SizedBox(
+            height: 4,
+          ),
+        ],
+        if (title.isEmpty)
+          const SizedBox(
+            height: 4,
+          ),
         TextFormField(
           validator: validator,
           keyboardType: keyboardType,

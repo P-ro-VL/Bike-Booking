@@ -18,6 +18,7 @@ class _BookBikeQRScanState extends State<BookBikeQRScan> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   final controller = Get.find<GlobalController>();
+  var scanned = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,25 +39,28 @@ class _BookBikeQRScanState extends State<BookBikeQRScan> {
           key: qrKey,
           onQRViewCreated: (_) {
             _.scannedDataStream.listen((scanData) {
+              if (scanned) return;
               setState(() {
                 final data = scanData.code!.split('_');
                 if (data[0] == 'BB') {
-                  final bikeId = data[1];
-                  final stationId = data[2];
+                  final bikeId = int.parse(data[1]);
+                  final stationId = int.parse(data[2]);
 
                   final bike = controller.stations
-                      .map((e) => e.bikes!)
+                      .map((e) => controller.getBikes(stationId))
                       .expand((element) => element)
                       .firstWhere((element) => element.id == bikeId);
                   final station = controller.stations
                       .firstWhere((element) => element.id == stationId);
+
+                  scanned = true;
 
                   showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
                             content: Text(
                               (Ln.i?.bikeIfoundBikeMessage ?? '')
-                                  .replaceAll('%s', bikeId),
+                                  .replaceAll('%s', bikeId.toString()),
                             ),
                             actions: [
                               TextButton(

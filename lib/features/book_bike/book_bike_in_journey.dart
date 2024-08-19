@@ -1,5 +1,7 @@
+import 'package:book_bike/common/widgets/ds_text_form_field.dart';
 import 'package:book_bike/data/entity/bike_entity.dart';
 import 'package:book_bike/data/entity/station_entity.dart';
+import 'package:book_bike/features/home/home_page.dart';
 import 'package:book_bike/global_controller.dart';
 import 'package:book_bike/utils/string_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +25,8 @@ class BookBikeInJourneyPage extends StatefulWidget {
 
 class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
   final controller = Get.find<GlobalController>();
+
+  final rating = RxInt(0);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +53,7 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 180,
+              height: 250,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
@@ -66,7 +70,7 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,10 +79,17 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                         children: [
                           const Text(
                             '0 km',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.w500),
+                                fontSize: 16, fontWeight: FontWeight.w500),
                           ),
-                          Text(Ln.i?.bikeIwentLength ?? '--'),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            Ln.i?.bikeIwentLength ?? '--',
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                       Container(
@@ -90,10 +101,17 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                         children: [
                           const Text(
                             '32 đ',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.w500),
+                                fontSize: 16, fontWeight: FontWeight.w500),
                           ),
-                          Text(Ln.i?.bikeImoneySpent ?? '--'),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            Ln.i?.bikeImoneySpent ?? '--',
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                       Container(
@@ -105,10 +123,17 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                         children: [
                           Text(
                             controller.user.value!.money!.formatMoney,
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.w500),
+                                fontSize: 16, fontWeight: FontWeight.w500),
                           ),
-                          Text(Ln.i?.bikeIremainingMoney ?? '--'),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            Ln.i?.bikeIremainingMoney ?? '--',
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       )
                     ],
@@ -117,6 +142,9 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                     height: 16,
                   ),
                   GestureDetector(
+                    onTap: () {
+                      endJourney();
+                    },
                     child: Container(
                       padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
@@ -138,6 +166,104 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
           )
         ],
       );
+
+  void endJourney() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            content: Text(Ln.i?.bikeIendJourneyConfirm ?? ''),
+            actions: [
+              CupertinoDialogAction(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  isDestructiveAction: true,
+                  child: Text(Ln.i?.commonIcancel ?? '')),
+              CupertinoDialogAction(
+                  onPressed: () {
+                    rateJourney();
+                  },
+                  isDefaultAction: true,
+                  child: Text(Ln.i?.commonIconfirm ?? '')),
+            ],
+          );
+        });
+  }
+
+  void rateJourney() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(12),
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    Ln.i?.bikeIratingJourney ?? '',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _buildStars(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    Ln.i?.bikeIratingComment ?? '',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  DSTextFormField(title: ''),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                        Get.to(HomePage());
+                        Get.showSnackbar(GetSnackBar(
+                          message: Ln.i?.bikeIratingSuccess,
+                          duration: Duration(seconds: 1),
+                          backgroundColor: Colors.green,
+                        ));
+                      },
+                      child: Text(Ln.i?.commonIconfirm ?? '')),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  List<Widget> _buildStars() {
+    return List.generate(5, (int index) => index + 1)
+        .map((e) => GestureDetector(
+              onTap: () {
+                rating.value = e;
+              },
+              child: Icon(
+                Icons.star,
+                size: 24,
+                color: rating.value >= e ? Colors.yellow[700] : Colors.black26,
+              ),
+            ))
+        .toList();
+  }
 
   Widget get _buildMap => FlutterMap(
         options: MapOptions(

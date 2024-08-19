@@ -1,6 +1,8 @@
 import 'package:book_bike/data/entity/bike_entity.dart';
+import 'package:book_bike/data/entity/journey_entity.dart';
 import 'package:book_bike/data/entity/station_entity.dart';
 import 'package:book_bike/data/entity/user_entity.dart';
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class UserRepository {
@@ -9,6 +11,8 @@ abstract class UserRepository {
   Future<List<StationEntity>> getStations();
 
   Future<List<BikeEntity>> getBikes();
+
+  Future<List<JourneyEntity>> getJourneys();
 }
 
 class UserRepositoryImpl extends UserRepository {
@@ -73,6 +77,32 @@ class UserRepositoryImpl extends UserRepository {
       );
 
       result.add(station);
+    }
+
+    return result;
+  }
+
+  @override
+  Future<List<JourneyEntity>> getJourneys() async {
+    final supabase = Supabase.instance.client;
+
+    final data = await supabase.from('CHUYENDI').select('*');
+    final result = <JourneyEntity>[];
+
+    for (var map in data) {
+      final startPoint = Offset(map['LATSTART'], map['LONGSTART']);
+      final endPoint = Offset(map['LATEND'], map['LONGEND']);
+
+      final journey = JourneyEntity(
+        id: map['MACD'],
+        bikeId: map['MAXE'],
+        accountId: map['MATK'],
+        fromLatLng: startPoint,
+        toLatLng: endPoint,
+        rating: map['DANHGIA'],
+      );
+
+      result.add(journey);
     }
 
     return result;
