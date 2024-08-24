@@ -16,7 +16,9 @@ class DetailStationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -41,9 +43,28 @@ class DetailStationPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+<<<<<<< HEAD
           children: (controller.getBikes(station.id ?? -1))
               .map((element) => _buildItem(element as BikeEntity))
               .toList()
+=======
+          children: (controller.getBikes(station.id ?? -1)).isEmpty
+              ? [
+                  Image.asset('assets/no_data.jpg'),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Center(
+                    child: Text(
+                      Ln.i?.commonInoData ?? '',
+                      style: TextStyle(color: Colors.black26, fontSize: 16),
+                    ),
+                  )
+                ]
+              : (controller.getBikes(station.id ?? -1))
+                  .map((element) => _buildItem(element as BikeEntity))
+                  .toList()
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
             ..add(const SizedBox(
               height: 32,
             )),

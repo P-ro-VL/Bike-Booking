@@ -11,6 +11,10 @@
     "commonIunknownError": "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
     "commonInext": "Tiếp tục",
     "commonIunderstand": "Đã hiểu",
+<<<<<<< HEAD
+=======
+    "commonInoData": "Không có dữ liệu",
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
     "authIfullName": "Họ tên",
     "authIcurrentPassword": "Mật khẩu hiện tại",
     "authInewPassword": "Mật khẩu mới",

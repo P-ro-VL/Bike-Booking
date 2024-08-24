@@ -20,6 +20,11 @@ class ForgetPasswordController extends GetxController {
     Get.showSnackbar(GetSnackBar(
       message: Ln.i?.authIretakePasswordSuccess,
       backgroundColor: Colors.green,
+<<<<<<< HEAD
+=======
+      duration: const Duration(seconds: 3),
+      showProgressIndicator: true,
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
     ));
   }
 }

@@ -15,6 +15,9 @@ import '../book_bike/book_bike_qr_scan.dart';
 String huongDan =
     "Tải ứng dụng về điện thoại của bạn.\nĐăng ký tài khoản bằng số điện thoại hoặc email.\nChọn điểm đón và điểm trả xe trên bản đồ.\nChọn loại xe đạp phù hợp với nhu cầu của bạn.\nQuét mã QR trên xe đạp để bắt đầu chuyến đi.\nKết thúc chuyến đi bằng cách trả xe vào đúng khu vực quy định.\nKiểm tra hóa đơn và thanh toán qua ứng dụng.";
 
+String huongDan =
+    "Tải ứng dụng về điện thoại của bạn.\nĐăng ký tài khoản bằng số điện thoại hoặc email.\nChọn điểm đón và điểm trả xe trên bản đồ.\nChọn loại xe đạp phù hợp với nhu cầu của bạn.\nQuét mã QR trên xe đạp để bắt đầu chuyến đi.\nKết thúc chuyến đi bằng cách trả xe vào đúng khu vực quy định.\nKiểm tra hóa đơn và thanh toán qua ứng dụng.";
+
 List<HomeFeature> features = [
   HomeFeature(
       name: 'Trạm xe',
@@ -43,7 +46,14 @@ List<HomeFeature> features = [
       color: Colors.red,
       onClick: () {
         final controller = Get.find<GlobalController>();
+<<<<<<< HEAD
         Get.to(const BookBikeQRScan());
+=======
+        Get.to(BookBikeInJourneyPage(
+          bike: controller.getBikes(controller.stations.first.id!).first,
+          station: controller.stations.first,
+        ));
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
       }),
   HomeFeature(
       name: 'Nạp tiền',
@@ -61,7 +71,23 @@ List<HomeFeature> features = [
             context: Get.context!,
             builder: (_) => AlertDialog(
                   content: SingleChildScrollView(
+<<<<<<< HEAD
                     child: Text(huongDan),
+=======
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Hướng dẫn sử dụng',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(huongDan),
+                      ],
+                    ),
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
                   ).paddingAll(12),
                   actions: [
                     CupertinoDialogAction(

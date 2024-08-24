@@ -31,6 +31,15 @@ class GlobalController extends GetxController {
     super.onInit();
   }
 
+<<<<<<< HEAD
+=======
+  Future<void> updateUserInfo(Map<String, dynamic> data) async {
+    final supabase = Supabase.instance.client;
+
+    await supabase.from('NGUOIDUNG').update(data);
+  }
+
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
   List<BikeEntity> getBikes(int stationId) {
     return bikes.where((e) => e.stationId == stationId).toList();
   }
@@ -67,11 +76,21 @@ class GlobalController extends GetxController {
       Get.showSnackbar(GetSnackBar(
         message: Ln.i?.authIcreateAccSuccess,
         backgroundColor: Colors.green,
+<<<<<<< HEAD
+=======
+        duration: const Duration(seconds: 3),
+        showProgressIndicator: true,
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
       ));
     } catch (_) {
       Get.showSnackbar(GetSnackBar(
         message: Ln.i?.commonIunknownError,
         backgroundColor: Colors.green,
+<<<<<<< HEAD
+=======
+        duration: const Duration(seconds: 3),
+        showProgressIndicator: true,
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
       ));
     }
   }

@@ -66,6 +66,7 @@ class JourneyHistoryPage extends StatelessWidget {
                                 const SizedBox(
                                   height: 8,
                                 ),
+<<<<<<< HEAD
                                 const Row(children: [
                                   Icon(
                                     Icons.timelapse,
@@ -91,14 +92,35 @@ class JourneyHistoryPage extends StatelessWidget {
                                 Row(children: [
                                   const Icon(
                                     Icons.fireplace,
+=======
+                                Row(children: [
+                                  const Icon(
+                                    Icons.star,
                                     size: 16,
                                   ),
                                   const SizedBox(
                                     width: 8,
                                   ),
                                   Text(
+                                      '${Ln.i?.journeyIrating}: ${journey.rating}'),
+                                ]),
+                                Row(children: [
+                                  const Icon(
+                                    Icons.pedal_bike,
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
+                                    size: 16,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+<<<<<<< HEAD
                                       '${Ln.i?.journeyIabsorbedKcal}: ${journey.id!} kcal'),
                                 ]),
+=======
+                                      '${Ln.i?.bikeIbikeId.replaceAll(' %s', '')}: ${journey.bikeId}'),
+                                ])
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
                               ],
                             ),
                             Column(
@@ -155,7 +177,11 @@ class JourneyHistoryPage extends StatelessWidget {
                   Text('${Ln.i?.journeyIrating}: '),
                   if (journey.rating == 0)
                     Text(Ln.i?.journeyInoRating ?? '',
+<<<<<<< HEAD
                         style: TextStyle(color: Colors.black38)),
+=======
+                        style: const TextStyle(color: Colors.black38)),
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
                   for (var i = 0; i < journey.rating!; i++)
                     Icon(
                       Icons.star,

@@ -25,9 +25,30 @@ class ForgotPasswordPage extends StatelessWidget {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
+<<<<<<< HEAD
       body: Obx(() => controller.step.value == 1
           ? ForgetPasswordStep1()
           : ForgotPasswordStep2()),
+=======
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Image.asset('assets/retake_password_bgr.jpg'),
+          ).paddingOnly(bottom: 20),
+          Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Obx(() => controller.step.value == 1
+                  ? ForgetPasswordStep1()
+                  : ForgotPasswordStep2()),
+            ],
+          ),
+        ],
+      ),
+>>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
     );
   }
 }

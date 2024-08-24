@@ -34,6 +34,8 @@ class AuthenticationPageController extends GetxController {
     } else {
       Get.showSnackbar(GetSnackBar(
         message: Ln.i?.authIloginFailed ?? '',
+        duration: const Duration(seconds: 3),
+        showProgressIndicator: true,
       ));
     }
   }
