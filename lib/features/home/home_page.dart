@@ -48,18 +48,6 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
-<<<<<<< HEAD
-            const SizedBox(
-              height: 16,
-            ),
-            Center(
-              child: Wrap(
-                runSpacing: 16,
-                children: features.map((e) => _buildFeature(e)).toList(),
-              ),
-            )
-=======
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
           ],
         ),
       ).paddingSymmetric(horizontal: 16),

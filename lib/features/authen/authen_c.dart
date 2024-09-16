@@ -31,9 +31,16 @@ class AuthenticationPageController extends GetxController {
     final authResult = await controller.login(phone: phone, password: password);
     if (authResult == 'success') {
       Get.to(const HomePage());
+    } else if(authResult == "no_user") {
+      Get.showSnackbar(GetSnackBar(
+        message: Ln.i?.authInoUser ?? '',
+        duration: const Duration(seconds: 3),
+        showProgressIndicator: true,
+        backgroundColor: Colors.red,
+      ));
     } else {
       Get.showSnackbar(GetSnackBar(
-        message: Ln.i?.authIloginFailed ?? '',
+        message: Ln.i?.authIwrongPassword ?? '',
         duration: const Duration(seconds: 3),
         showProgressIndicator: true,
       ));

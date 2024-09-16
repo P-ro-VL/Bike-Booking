@@ -38,6 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               DSTextFormField(
                 title: Ln.i?.authIfullName ?? '',
+                keyboardType: TextInputType.name,
                 validator: (text) {
                   if (text == null || text.isEmpty) {
                     return Ln.i?.commonIrequiredField;

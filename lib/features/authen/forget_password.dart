@@ -1,5 +1,6 @@
 import 'package:book_bike/common/widgets/ds_text_form_field.dart';
 import 'package:book_bike/features/authen/forget_password_c.dart';
+import 'package:book_bike/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,15 +22,10 @@ class ForgotPasswordPage extends StatelessWidget {
           child: const Icon(Icons.arrow_back),
         ),
         title: Text(
-          Ln.i?.commonIchangePassword ?? '',
+          Ln.i?.authIforgetPassword ?? '',
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
-<<<<<<< HEAD
-      body: Obx(() => controller.step.value == 1
-          ? ForgetPasswordStep1()
-          : ForgotPasswordStep2()),
-=======
       body: Stack(
         children: [
           Align(
@@ -48,7 +44,6 @@ class ForgotPasswordPage extends StatelessWidget {
           ),
         ],
       ),
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
     );
   }
 }
@@ -58,6 +53,7 @@ class ForgetPasswordStep1 extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
   final controller = Get.find<ForgetPasswordController>();
+  final globalController = Get.find<GlobalController>();
 
   @override
   Widget build(BuildContext context) {

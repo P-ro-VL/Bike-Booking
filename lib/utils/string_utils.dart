@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 extension NumberExtensions on num {
   String get formatMoney {
     final formatter = NumberFormat('#,###');
-    return '${formatter.format(this)} đ';
+    return '${formatter.format(this)} VNĐ';
   }
 
   String get formatDate {

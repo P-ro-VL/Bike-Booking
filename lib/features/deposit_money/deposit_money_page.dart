@@ -27,7 +27,7 @@ class DepositMoneyPage extends StatelessWidget {
             child: const Icon(Icons.arrow_back),
           ),
           title: Text(
-            Ln.i?.journeyIhistoryTitle ?? '',
+            Ln.i?.depositIdeposit ?? '',
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
         ),
@@ -94,6 +94,17 @@ class DepositMoneyPage extends StatelessWidget {
                                     ),
                                     ElevatedButton(
                                         onPressed: () {
+                                          if (moneyValue.value <= 0) {
+                                            Get.showSnackbar(GetSnackBar(
+                                              backgroundColor: Colors.red,
+                                              message:
+                                                  Ln.i?.depositImustBePositive,
+                                              duration:
+                                                  const Duration(seconds: 3),
+                                              showProgressIndicator: true,
+                                            ));
+                                            return;
+                                          }
                                           controller.user.value!.money =
                                               ((controller.user.value?.money ??
                                                           0) +

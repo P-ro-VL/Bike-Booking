@@ -47,9 +47,12 @@ class ListStationPage extends StatelessWidget {
             ),
             Obx(
               () => Column(
-                  children: controller.stations
-                      .map((element) => _buildItem(element as StationEntity))
-                      .toList()
+                  children: controller.stations.isEmpty
+                      ? [Text(Ln.i?.commonInoData ?? '')]
+                      : controller.stations
+                          .map(
+                              (element) => _buildItem(element as StationEntity))
+                          .toList()
                     ..add(const SizedBox(
                       height: 32,
                     ))),

@@ -18,7 +18,7 @@ class _BookBikeQRScanState extends State<BookBikeQRScan> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   final controller = Get.find<GlobalController>();
-  var scanned = false;
+  late bool scanned = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,51 +35,67 @@ class _BookBikeQRScanState extends State<BookBikeQRScan> {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
-      body: QRView(
-          key: qrKey,
-          onQRViewCreated: (_) {
-            _.scannedDataStream.listen((scanData) {
-              if (scanned) return;
-              setState(() {
-                final data = scanData.code!.split('_');
-                if (data[0] == 'BB') {
-                  final bikeId = int.parse(data[1]);
-                  final stationId = int.parse(data[2]);
+      body: Stack(
+        children: [
+          QRView(
+              key: qrKey,
+              overlay:
+                  QrScannerOverlayShape(cutOutHeight: 350, cutOutWidth: 350),
+              onQRViewCreated: (_) {
+                _.scannedDataStream.listen((scanData) {
+                  if (scanned) return;
+                  setState(() {
+                    final data = scanData.code!.split('_');
+                    if (data[0] == 'BB') {
+                      final bikeId = int.parse(data[1]);
+                      final stationId = int.parse(data[2]);
 
-                  final bike = controller.stations
-                      .map((e) => controller.getBikes(stationId))
-                      .expand((element) => element)
-                      .firstWhere((element) => element.id == bikeId);
-                  final station = controller.stations
-                      .firstWhere((element) => element.id == stationId);
+                      final bike = controller.stations
+                          .map((e) => controller.getBikes(stationId))
+                          .expand((element) => element)
+                          .firstWhere((element) => element.id == bikeId);
+                      final station = controller.stations
+                          .firstWhere((element) => element.id == stationId);
 
-                  scanned = true;
+                      scanned = true;
 
-                  showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                            content: Text(
-                              (Ln.i?.bikeIfoundBikeMessage ?? '')
-                                  .replaceAll('%s', bikeId.toString()),
-                            ),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: Text(Ln.i?.commonIcancel ?? '')),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.to(BookBikeInJourneyPage(
-                                        bike: bike, station: station));
-                                  },
-                                  child: Text(Ln.i?.commonIconfirm ?? '')),
-                            ],
-                          ));
-                }
-              });
-            });
-          }),
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                                content: Text(
+                                  (Ln.i?.bikeIfoundBikeMessage ?? '')
+                                      .replaceAll('%s', bikeId.toString())
+                                      .replaceAll('%x', station.name ?? '--'),
+                                ),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        scanned = false;
+                                        Get.back();
+                                      },
+                                      child: Text(Ln.i?.commonIcancel ?? '')),
+                                  TextButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        Get.off(BookBikeInJourneyPage(
+                                            bike: bike, station: station));
+                                      },
+                                      child: Text(Ln.i?.commonIconfirm ?? '')),
+                                ],
+                              ));
+                    }
+                  });
+                });
+              }),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              Ln.i?.bikeIqrInstruction ?? '',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ).marginOnly(bottom: 40),
+        ],
+      ),
     );
   }
 }

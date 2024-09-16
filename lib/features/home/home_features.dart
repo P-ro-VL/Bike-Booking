@@ -1,3 +1,4 @@
+import 'package:book_bike/features/book_bike/book_bike_qr_scan.dart';
 import 'package:book_bike/features/deposit_money/deposit_money_page.dart';
 import 'package:book_bike/features/journey_history/journey_history_page.dart';
 import 'package:book_bike/features/station/list_station_page.dart';
@@ -11,9 +12,6 @@ import 'package:get/get.dart';
 
 import '../book_bike/book_bike_in_journey.dart';
 import '../book_bike/book_bike_qr_scan.dart';
-
-String huongDan =
-    "Tải ứng dụng về điện thoại của bạn.\nĐăng ký tài khoản bằng số điện thoại hoặc email.\nChọn điểm đón và điểm trả xe trên bản đồ.\nChọn loại xe đạp phù hợp với nhu cầu của bạn.\nQuét mã QR trên xe đạp để bắt đầu chuyến đi.\nKết thúc chuyến đi bằng cách trả xe vào đúng khu vực quy định.\nKiểm tra hóa đơn và thanh toán qua ứng dụng.";
 
 String huongDan =
     "Tải ứng dụng về điện thoại của bạn.\nĐăng ký tài khoản bằng số điện thoại hoặc email.\nChọn điểm đón và điểm trả xe trên bản đồ.\nChọn loại xe đạp phù hợp với nhu cầu của bạn.\nQuét mã QR trên xe đạp để bắt đầu chuyến đi.\nKết thúc chuyến đi bằng cách trả xe vào đúng khu vực quy định.\nKiểm tra hóa đơn và thanh toán qua ứng dụng.";
@@ -45,15 +43,7 @@ List<HomeFeature> features = [
       icon: Icons.qr_code,
       color: Colors.red,
       onClick: () {
-        final controller = Get.find<GlobalController>();
-<<<<<<< HEAD
         Get.to(const BookBikeQRScan());
-=======
-        Get.to(BookBikeInJourneyPage(
-          bike: controller.getBikes(controller.stations.first.id!).first,
-          station: controller.stations.first,
-        ));
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
       }),
   HomeFeature(
       name: 'Nạp tiền',
@@ -71,9 +61,6 @@ List<HomeFeature> features = [
             context: Get.context!,
             builder: (_) => AlertDialog(
                   content: SingleChildScrollView(
-<<<<<<< HEAD
-                    child: Text(huongDan),
-=======
                     child: Column(
                       children: [
                         const Text(
@@ -87,7 +74,6 @@ List<HomeFeature> features = [
                         Text(huongDan),
                       ],
                     ),
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
                   ).paddingAll(12),
                   actions: [
                     CupertinoDialogAction(

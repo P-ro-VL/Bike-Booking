@@ -11,10 +11,10 @@
     "commonIunknownError": "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
     "commonInext": "Tiếp tục",
     "commonIunderstand": "Đã hiểu",
-<<<<<<< HEAD
-=======
     "commonInoData": "Không có dữ liệu",
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
+    "authIwrongPhone": "Số điện thoại không đúng",
+    "authInoUser": "Không tìm thấy người dùng, vui lòng tạo tài khoản",
+    "authIwrongPassword": "Sai mật khẩu, vui lòng thử lại",
     "authIfullName": "Họ tên",
     "authIcurrentPassword": "Mật khẩu hiện tại",
     "authInewPassword": "Mật khẩu mới",
@@ -68,19 +68,22 @@
     "journeyIrating": "Đánh giá",
     "journeyInoRating": "Không có đánh giá",
     "bikeIrentTitle": "Thuê xe",
-    "bikeIfoundBikeMessage": "Bạn chắc chắn muốn thuê xe mã số %s?",
+    "bikeIfoundBikeMessage": "Bạn chắc chắn muốn thuê xe mã số %s tại trạm %x?",
     "bikeIbikeId": "Xe mã số %s",
-    "bikeImoneySpent": "Số tiền\nđã trừ",
-    "bikeIremainingMoney": "Số tiền\ncòn lại",
-    "bikeIwentLength": "Quãng đường\nđã đi",
+    "bikeImoneySpent": "Số tiền đã trừ",
+    "bikeIremainingMoney": "Số tiền còn lại",
+    "bikeIwentLength": "Quãng đường đã đi",
     "bikeIendJourneyAction": "Dừng xe",
-    "bikeIendJourneyConfirm": "Bạn xác nhận muốn kết thúc chuyến đi?",
+    "bikeIqrInstruction": "Quét mã QR để thuê xe",
     "bikeIratingJourney": "Đánh giá chuyến đi",
     "bikeIratingComment": "Bình luận",
     "bikeIratingSuccess": "Đánh giá chuyến đi thành công",
+    "bikeIendJourneyConfirm": "Xác nhận kết thúc chuyến đi?",
+    "bikeIinJourney": "Đang trong chuyến",
     "depositIdepositAmount": "Số tiền nạp",
     "depositIdeposit": "Nạp tiền",
     "depositIscanQRtitle": "Quét mã để nạp tiền",
     "depositIscanQRmessage": "Vui lòng quét mã để nạp %s vào tài khoản",
-    "depositIsuccess": "Bạn đã nạp thành công %s vào tài khoản"
+    "depositIsuccess": "Bạn đã nạp thành công %s vào tài khoản",
+    "depositImustBePositive": "Số tiền nạp cần lớn hơn 0"
 }

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:lottie/lottie.dart' as lottie;
 
 import '../../l10n/app_l18.dart';
 
@@ -39,7 +40,7 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
           child: const Icon(Icons.arrow_back),
         ),
         title: Text(
-          Ln.i?.journeyIhistoryTitle ?? '',
+          Ln.i?.bikeIinJourney ?? '',
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
@@ -62,8 +63,7 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    (Ln.i?.bikeIbikeId ?? '')
-                        .replaceAll('%s', widget.bike.id.toString() ?? '--'),
+                    '${(Ln.i?.bikeIbikeId ?? '').replaceAll('%s', widget.bike.id.toString() ?? '--')} - ${widget.station.name ?? ''}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -72,72 +72,10 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          const Text(
-                            '0 km',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            Ln.i?.bikeIwentLength ?? '--',
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      Container(
-                        width: 1,
-                        height: 40,
-                        color: Colors.black26,
-                      ),
-                      Column(
-                        children: [
-                          const Text(
-                            '32 đ',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            Ln.i?.bikeImoneySpent ?? '--',
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      Container(
-                        width: 1,
-                        height: 40,
-                        color: Colors.black26,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            controller.user.value!.money!.formatMoney,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            Ln.i?.bikeIremainingMoney ?? '--',
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                  _buildRowInfo(Ln.i?.bikeIwentLength, '0 km'),
+                  _buildRowInfo(Ln.i?.bikeImoneySpent, '0 VNĐ'),
+                  _buildRowInfo(Ln.i?.bikeIremainingMoney,
+                      controller.user.value!.money!.formatMoney),
                   const SizedBox(
                     height: 16,
                   ),
@@ -146,7 +84,7 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                       endJourney();
                     },
                     child: Container(
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.red),
@@ -166,6 +104,19 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
           )
         ],
       );
+
+  Widget _buildRowInfo(String? title, String? value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title ?? '--'),
+        Text(
+          value ?? '--',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
+      ],
+    );
+  }
 
   void endJourney() {
     showDialog(
@@ -238,7 +189,7 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                         Get.to(HomePage());
                         Get.showSnackbar(GetSnackBar(
                           message: Ln.i?.bikeIratingSuccess,
-                          duration: Duration(seconds: 1),
+                          duration: Duration(seconds: 3),
                           backgroundColor: Colors.green,
                         ));
                       },
@@ -298,8 +249,8 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                       height: 12,
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           color: Colors.red),
@@ -315,29 +266,8 @@ class _BookBikeInJourneyPageState extends State<BookBikeInJourneyPage> {
                 height: 100,
                 point: LatLng(widget.station.lat?.toDouble() ?? 0,
                     widget.station.lng?.toDouble() ?? 0),
-                child: Column(
-                  children: [
-                    const Icon(
-                      Icons.person,
-                      size: 32,
-                      color: Colors.green,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.green),
-                      child: Text(
-                        'Bạn',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ))
+                child: lottie.Lottie.asset("assets/gps_anim.json",
+                    frameRate: const lottie.FrameRate(60)))
           ])
         ],
       );

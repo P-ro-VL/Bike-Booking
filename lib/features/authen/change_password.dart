@@ -32,64 +32,6 @@ class ChangePasswordPage extends StatelessWidget {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
-<<<<<<< HEAD
-      body: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            DSTextFormField(
-              title: Ln.i?.authIcurrentPassword ?? '',
-              isPassword: true,
-              onChanged: (newText) {
-                oldPassword.value = newText;
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            DSTextFormField(
-              title: Ln.i?.authInewPassword ?? '',
-              isPassword: true,
-              validator: (newText) {
-                if (newText == null || newText.isEmpty)
-                  return Ln.i?.commonIrequiredField;
-                return null;
-              },
-              onChanged: (newText) {
-                newPassword.value = newText;
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            DSTextFormField(
-              title: Ln.i?.authIreenterNewPassword ?? '',
-              isPassword: true,
-              validator: (newText) {
-                if (newText == null || newText.isEmpty)
-                  return Ln.i?.commonIrequiredField;
-                if (newText != newPassword.value) {
-                  notMatch.value = true;
-                  return Ln.i?.authIpasswordNotMatch;
-                }
-                notMatch.value = false;
-                return null;
-              },
-              onChanged: (newText) {
-                confirmNewPassword.value = newText;
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextButton(
-                onPressed: () {
-                  changePassword();
-                },
-                child: Text(Ln.i?.commonIchangePassword ?? ''))
-          ],
-        ).paddingSymmetric(horizontal: 16),
-=======
       body: Stack(
         children: [
           Align(
@@ -160,7 +102,6 @@ class ChangePasswordPage extends StatelessWidget {
             ).paddingSymmetric(horizontal: 16),
           ),
         ],
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
       ),
     );
   }
@@ -175,11 +116,8 @@ class ChangePasswordPage extends StatelessWidget {
       Get.showSnackbar(GetSnackBar(
         message: Ln.i?.authIoldPasswordNotCorrect,
         backgroundColor: Colors.red,
-<<<<<<< HEAD
-=======
         duration: const Duration(seconds: 3),
         showProgressIndicator: true,
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
       ));
       return;
     }
@@ -188,11 +126,8 @@ class ChangePasswordPage extends StatelessWidget {
       Get.showSnackbar(GetSnackBar(
         message: Ln.i?.authIpasswordNotMatch,
         backgroundColor: Colors.red,
-<<<<<<< HEAD
-=======
         duration: const Duration(seconds: 3),
         showProgressIndicator: true,
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
       ));
       return;
     }
@@ -205,11 +140,8 @@ class ChangePasswordPage extends StatelessWidget {
     Get.showSnackbar(GetSnackBar(
       message: Ln.i?.authIchangePasswordSuccess,
       backgroundColor: Colors.green,
-<<<<<<< HEAD
-=======
       duration: const Duration(seconds: 3),
       showProgressIndicator: true,
->>>>>>> f27c27c65695bae3771de1235d29a3e4cbd941ff
     ));
   }
 }

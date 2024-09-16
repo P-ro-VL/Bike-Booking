@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class UserRepository {
-  Future<List<UserEntity>> getUsers();
+  Future<List<UserEntity?>> getUsers();
 
   Future<List<StationEntity>> getStations();
 
@@ -17,7 +17,7 @@ abstract class UserRepository {
 
 class UserRepositoryImpl extends UserRepository {
   @override
-  Future<List<UserEntity>> getUsers() async {
+  Future<List<UserEntity?>> getUsers() async {
     final supabase = Supabase.instance.client;
 
     final data = await supabase.from('NGUOIDUNG').select('*');
